@@ -25,9 +25,9 @@ projects:
         remotes:
           origin: https://github.com/che-incubator/quarkus-api-example
 components:
-  - volume:
+  - name: projects
+    volume:
       size: 2Gi
-      name: projects
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:ubi8-latest
@@ -41,14 +41,12 @@ components:
           protocol: http
           targetPort: 8080
           path: /food
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
       memoryLimit: 6G
       memoryRequest: 512Mi
       cpuRequest: 1000m
       cpuLimit: 4000m
       mountSources: true
+      sourceMapping: /projects
 
 commands:
   - id: package
