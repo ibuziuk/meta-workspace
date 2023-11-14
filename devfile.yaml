@@ -25,9 +25,9 @@ projects:
         remotes:
           origin: https://github.com/che-incubator/quarkus-api-example
 components:
-    - volume:
-        size: 2Gi
-        name: projects
+  - volume:
+      size: 2Gi
+      name: projects
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:ubi8-latest
