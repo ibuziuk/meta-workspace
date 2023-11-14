@@ -1,0 +1,81 @@
+schemaVersion: 2.2.0
+metadata:
+  generateName: meta-workspace
+projects:
+      - name: meta-workspace
+        git:
+          remotes:
+            origin: https://github.com/ibuziuk/meta-workspace
+      - name: docs
+        clonePath: docs
+        git:
+          remotes:
+            origin: >-
+              https://github.com/eclipse-che/che-docs
+      - name: container-images
+        git:
+          remotes:
+            origin: https://github.com/devfile/developer-images
+      - name: operator
+        git:
+          remotes:
+            origin: https://github.com/eclipse-che/che-operator
+      - name: quarkus-api-example
+        git:
+          remotes:
+            origin: https://github.com/che-incubator/quarkus-api-example
+components:
+    - volume:
+        size: 2Gi
+        name: projects
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      endpoints:
+        - exposure: none
+          name: debug
+          protocol: tcp
+          targetPort: 5005
+        - exposure: public
+          name: list-all-food
+          protocol: http
+          targetPort: 8080
+          path: /food
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      memoryLimit: 6G
+      memoryRequest: 512Mi
+      cpuRequest: 1000m
+      cpuLimit: 4000m
+      mountSources: true
+
+commands:
+  - id: package
+    exec:
+      label: "Package"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/quarkus-api-example
+      commandLine: "./mvnw clean package -DskipTests=true"
+      group:
+        kind: build
+        isDefault: true
+  - id: runtests
+    exec:
+      label: "Run Tests"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/quarkus-api-example
+      commandLine: "./mvnw test"
+      group:
+        kind: test
+  - id: startdev
+    exec:
+      label: "Start Development mode (Hot reload + debug)"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/quarkus-api-example
+      commandLine: "./mvnw compile quarkus:dev"
+      group:
+        kind: run
+events:
+  postStart:
+    - package
