@@ -2,28 +2,28 @@ schemaVersion: 2.2.0
 metadata:
   generateName: meta-workspace
 projects:
-      - name: meta-workspace
-        git:
-          remotes:
-            origin: https://github.com/ibuziuk/meta-workspace
-      - name: docs
-        clonePath: docs
-        git:
-          remotes:
-            origin: >-
-              https://github.com/eclipse-che/che-docs
-      - name: container-images
-        git:
-          remotes:
-            origin: https://github.com/devfile/developer-images
-      - name: operator
-        git:
-          remotes:
-            origin: https://github.com/eclipse-che/che-operator
-      - name: quarkus-api-example
-        git:
-          remotes:
-            origin: https://github.com/che-incubator/quarkus-api-example
+    - name: meta-workspace
+      git:
+        remotes:
+          origin: https://github.com/ibuziuk/meta-workspace
+    - name: docs
+      clonePath: docs
+      git:
+        remotes:
+          origin: >-
+            https://github.com/eclipse-che/che-docs
+    - name: container-images
+      git:
+        remotes:
+          origin: https://github.com/devfile/developer-images
+    - name: operator
+      git:
+        remotes:
+          origin: https://github.com/eclipse-che/che-operator
+    - name: quarkus-api-example
+      git:
+        remotes:
+          origin: https://github.com/che-incubator/quarkus-api-example
 components:
     - volume:
         size: 2Gi
